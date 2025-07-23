@@ -1,0 +1,23 @@
+version: "3.9"
+
+services:
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    
+  backend:
+    build: ./backend
+    command: uvicorn main:app --host 0.0.0.0 --port 8000
+    depends_on:
+      - redis
+    environment:
+      - PYTHONUNBUFFERED=1
+      - STREAM_RAW=crypto_raw
+      - STREAM_CLEAN=crypto_clean
+    
+  frontend:
+    build: ./frontend
+    ports: ["3000:3000"]
+    depends_on:
+      - backend
