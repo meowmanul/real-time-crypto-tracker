@@ -4,4 +4,4 @@ aiohttp
 websockets
 redis
 pydantic
-python-dotenv
+requests

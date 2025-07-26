@@ -1,23 +1,47 @@
-version: "3.9"
 
 services:
   redis:
-    image: redis:7-alpine
+    image: redis:latest
     ports:
       - "6379:6379"
-    
+
   backend:
     build: ./backend
-    command: uvicorn main:app --host 0.0.0.0 --port 8000
+    volumes: 
+      - ./backend:/app
+    env_file:
+      - ./backend/.env
     depends_on:
       - redis
+    command: uvicorn api:app --host 0.0.0.0 --port 8000 --reload
+    ports:
+      - "8000:8000"
+
+  collector:
+    build: ./backend
+    volumes: 
+      - ./backend:/app
+    env_file:
+      - ./backend/.env
+    depends_on:
+      - redis
+    command: python run_binance.py
+  
+  dispatcher:
+    build: ./backend
     environment:
-      - PYTHONUNBUFFERED=1
-      - STREAM_RAW=crypto_raw
-      - STREAM_CLEAN=crypto_clean
-    
+      - PUBLISH_URL=http://backend:8000/publish
+    volumes: 
+      - ./backend:/app
+    env_file:
+      - ./backend/.env
+    depends_on:
+      - redis
+    command: python -m workers.dispatcher
+
   frontend:
     build: ./frontend
-    ports: ["3000:3000"]
+    ports:
+      - "3000:80"       # хост:контейнер
     depends_on:
       - backend

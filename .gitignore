@@ -1,0 +1,81 @@
+# ========== Общие ==========
+# Системные
+.DS_Store
+Thumbs.db
+
+# Логи
+*.log
+
+# Файлы окружения
+.env
+.env.*  
+
+# Файлы IDE и редакторов
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# ========== Backend (Python) ==========
+# Виртуальное окружение
+venv/
+.venv/
+.env/
+**/venv/
+**/.venv/
+**/.env/
+
+# Байты Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# SQLite базы (если будут)
+*.sqlite3
+
+# ========== Frontend (Node / Vite / React) ==========
+# Папка с зависимостями
+frontend/node_modules/
+
+# Папка со сборкой
+frontend/dist/
+# или для CRA
+frontend/build/
+
+# lock‑файл, если вы используете yarn
+# frontend/yarn.lock
+
+# ========== Docker ==========
+# Файлы Docker Compose с локальными настройками
+docker-compose.override.yml
+
+# ========== Дополнительно ==========
+.gitignore
+
+# Служебные файлы
+*.swp
+*~ 
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
